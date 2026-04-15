@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friend Suggestion | VIT - AP</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS Variables --- */
+    :root {
+      --primary: #ffd700;
+      --text: #e0f2f1;
+      --heading: #ffd700;
+      --status: #00e5ff;
+    }
+
+    /* --- Body & Background --- */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(42, 10, 42, 0.85), rgba(0, 31, 63, 0.85), rgba(0, 51, 102, 0.85)), 
+                  url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+      background-size: 400% 400%, cover;
+      animation: gradient 12s ease infinite;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%, center; }
+      50% { background-position: 100% 50%, center; }
+      100% { background-position: 0% 50%, center; }
+    }
+
+    /* --- VIT - AP Banners --- */
+    .vit-banner {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .vit-footer {
+      border-bottom: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: auto; 
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      padding: 20px;
+    }
+
+    /* --- Main Containers --- */
+    .container {
+      flex: 1;
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Hide the main app initially */
+    #main-app {
+      display: none;
+      justify-content: flex-start;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: var(--heading);
+      margin-bottom: 10px;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .welcome-text {
+      font-size: 1.2rem;
+      color: var(--status);
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    /* --- Glassmorphism Cards --- */
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Login specific card styling */
+    .login-card {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+
+    .login-card h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: var(--heading);
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    /* --- Inputs & Buttons --- */
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      outline: none;
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--status);
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: 0.2s;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    /* --- Status Output --- */
+    #output {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: var(--status);
+      min-height: 40px;
+      text-align: left;
+      font-family: monospace;
+      font-size: 1.1rem;
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="vit-banner">
+  🎓 VIT - AP University
+</header>
+
+<div id="login-section" class="container">
+  <div class="card login-card">
+    <h2>🔒 Student Login</h2>
+    <form onsubmit="handleLogin(event)">
+      <input type="text" id="loginUsername" placeholder="Enter Registration Number / Name" required>
+      <input type="password" id="loginPassword" placeholder="Enter Password" required>
+      <button type="submit">Login to Portal 🚀</button>
+    </form>
+  </div>
+</div>
+
+<div id="main-app" class="container">
+  <h1>Friend Suggestion Network</h1>
+  <div class="welcome-text" id="user-greeting">Welcome, Student!</div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>👤 Add User</h2>
+      <input id="name" placeholder="Enter name">
+      <button onclick="addUser()">➕ Add</button>
+    </div>
+
+    <div class="card">
+      <h2>🤝 Add Friend</h2>
+      <input id="user1" placeholder="User 1">
+      <input id="user2" placeholder="User 2">
+      <button onclick="addFriend()">🔗 Connect</button>
+    </div>
+
+    <div class="card">
+      <h2>🔄 Mutual Friends</h2>
+      <input id="u1" placeholder="User 1">
+      <input id="u2" placeholder="User 2">
+      <button onclick="getMutual()">🔍 Find</button>
+    </div>
+
+    <div class="card">
+      <h2>💡 Recommendations</h2>
+      <input id="recUser" placeholder="User">
+      <button onclick="getRecommendations()">✨ Recommend</button>
+    </div>
+  </div>
+
+  <div id="output">System ready. Waiting for commands...</div>
+</div>
+
+<footer class="vit-banner vit-footer">
+  VIT - AP © 2026 | Built for the Future
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+  function handleLogin(event) {
+    // Prevent the form from refreshing the page
+    event.preventDefault();
+    
+    // Get the username entered
+    const username = document.getElementById('loginUsername').value;
+    
+    // Hide the login section
+    document.getElementById('login-section').style.display = 'none';
+    
+    // Show the main app section (using flex to maintain centering/layout)
+    document.getElementById('main-app').style.display = 'flex';
+    
+    // Personalize the greeting
+    document.getElementById('user-greeting').innerText = `Welcome to the Network, ${username}!`;
+  }
+</script>
+
+</body>
+</html>
